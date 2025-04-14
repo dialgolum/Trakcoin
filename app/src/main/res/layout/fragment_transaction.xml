@@ -6,14 +6,21 @@
     android:fitsSystemWindows="true"
     tools:context=".fragments.TransactionFragment">
 
-    <!-- Placeholder for transaction list (we'll use RecyclerView later) -->
+    <!-- Placeholder for transaction list -->
 
-    <TextView
-        android:id="@+id/noDataText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No transactions available"
-        android:layout_centerInParent="true"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerTransactions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:clipToPadding="false" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/noDataText"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="No transactions available"-->
+<!--        android:layout_centerInParent="true"/>-->
 
     <!-- Add Transaction Button -->
 

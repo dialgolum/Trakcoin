@@ -14,10 +14,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.trakcoin.R
+import com.example.trakcoin.models.Transaction
+import com.example.trakcoin.utils.SharedPrefManager
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import android.util.Log
 
 
 class addTransactionActivity : AppCompatActivity() {
@@ -84,6 +87,8 @@ class addTransactionActivity : AppCompatActivity() {
 
         // Save button click
         saveBtn.setOnClickListener {
+
+
             val title = titleInput.text.toString()
             val amount = amountInput.text.toString().toDoubleOrNull()
             val category = categoryInput.selectedItem.toString()
@@ -91,12 +96,27 @@ class addTransactionActivity : AppCompatActivity() {
             val typeId = typeGroup.checkedRadioButtonId
             val type = findViewById<RadioButton>(typeId).text.toString()
 
+
             if (title.isEmpty() || amount == null || typeId == -1) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Save to SharedPreferences (we'll build this logic next!)
+            // Save to SharedPreferences
+            val transaction = Transaction(
+                id = (0..9999).random(), // Random ID for simplicity
+                title = title,
+                amount = amount,
+                category = category,
+                date = date,
+                type = type
+            )
+
+
+            val prefManager = SharedPrefManager(this)
+            prefManager.saveTransaction(transaction)
+
+
             Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
             finish()
         }
