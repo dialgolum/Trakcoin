@@ -24,4 +24,23 @@ class SharedPrefManager(context: Context) {
         val type = object : TypeToken<List<Transaction>>() {}.type
         return gson.fromJson(json, type)
     }
+
+    fun updateTransaction(updated: Transaction) {
+        val list = getAllTransactions().toMutableList()
+        val index = list.indexOfFirst { it.id == updated.id }
+        if (index != -1) {
+            list[index] = updated
+            val json = gson.toJson(list)
+            editor.putString("transaction_list", json)
+            editor.apply()
+        }
+    }
+
+    fun deleteTransaction(id: Int) {
+        val list = getAllTransactions().toMutableList()
+        val updatedList = list.filter { it.id != id }
+        val json = gson.toJson(updatedList)
+        editor.putString("transaction_list", json)
+        editor.apply()
+    }
 }

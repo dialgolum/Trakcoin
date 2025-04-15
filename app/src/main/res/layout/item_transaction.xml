@@ -1,37 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:background="#F1F1F1"
-    android:layout_marginBottom="8dp"
-    android:elevation="2dp"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp"
+    android:background="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/textTitle"
-        android:text="Title"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:layout_gravity="center_vertical"
+        android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/textAmount"
-        android:text="$0.00"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <!-- Icon -->
 
-    <TextView
-        android:id="@+id/textDetails"
-        android:text="Category • Date"
-        android:textSize="12sp"
-        android:textColor="#555"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/iconType"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Transaction Type Icon"
+            android:src="@drawable/ic_income"
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
+
+        <!-- Details -->
 
 
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="4dp">
+
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Transaction Title"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#212121" />
+
+            <TextView
+                android:id="@+id/textAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rs. 0.00"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_green_dark"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Food • 2025-04-14"
+                android:textSize="12sp"
+                android:textColor="#666666" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

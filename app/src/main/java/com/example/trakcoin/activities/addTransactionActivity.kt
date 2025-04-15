@@ -21,6 +21,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import android.util.Log
+import com.google.gson.Gson
 
 
 class addTransactionActivity : AppCompatActivity() {
@@ -53,6 +54,26 @@ class addTransactionActivity : AppCompatActivity() {
 
         val dateInput = findViewById<EditText>(R.id.editDate)
         val calendar = Calendar.getInstance()
+
+        val editJson = intent.getStringExtra("transactionToEdit")
+        val editingTransaction = editJson?.let { Gson().fromJson(it, Transaction::class.java) }
+
+        if (editingTransaction != null) {
+            titleInput.setText(editingTransaction.title)
+            amountInput.setText(editingTransaction.amount.toString())
+            dateInput.setText(editingTransaction.date)
+
+            // Set spinner
+            val categoryArray = resources.getStringArray(R.array.categories)
+            val catIndex = categoryArray.indexOf(editingTransaction.category)
+            if (catIndex >= 0) categoryInput.setSelection(catIndex)
+
+            // Set radio button
+            val typeId = if (editingTransaction.type == "Income") R.id.radioIncome else R.id.radioExpense
+            typeGroup.check(typeId)
+
+            saveBtn.text = "Update Transaction"
+        }
 
         // Set default date to today
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -88,7 +109,6 @@ class addTransactionActivity : AppCompatActivity() {
         // Save button click
         saveBtn.setOnClickListener {
 
-
             val title = titleInput.text.toString()
             val amount = amountInput.text.toString().toDoubleOrNull()
             val category = categoryInput.selectedItem.toString()
@@ -103,8 +123,8 @@ class addTransactionActivity : AppCompatActivity() {
             }
 
             // Save to SharedPreferences
-            val transaction = Transaction(
-                id = (0..9999).random(), // Random ID for simplicity
+            val newtransaction = Transaction(
+                id = editingTransaction?.id ?: (0..99999).random(), // Random ID for simplicity
                 title = title,
                 amount = amount,
                 category = category,
@@ -114,10 +134,15 @@ class addTransactionActivity : AppCompatActivity() {
 
 
             val prefManager = SharedPrefManager(this)
-            prefManager.saveTransaction(transaction)
 
+            if (editingTransaction != null) {
+                prefManager.updateTransaction(newtransaction)
+                Toast.makeText(this, "Transaction updated", Toast.LENGTH_SHORT).show()
+            } else {
+                prefManager.saveTransaction(newtransaction)
+                Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
+            }
 
-            Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
             finish()
         }
 
