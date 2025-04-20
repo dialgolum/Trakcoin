@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
@@ -14,14 +15,20 @@
         android:name="com.example.trakcoin.fragments.TransactionFragment"
         android:label="Home" />
 
-    <fragment
-        android:id="@+id/budgetFragment"
-        android:name="com.example.trakcoin.fragments.BudgetFragment"
-        android:label="Home" />
+<!--    <fragment-->
+<!--        android:id="@+id/budgetFragment"-->
+<!--        android:name="com.example.trakcoin.fragments.BudgetFragment"-->
+<!--        android:label="Home" />-->
 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.trakcoin.fragments.SettingsFragment"
         android:label="Home" />
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.example.trakcoin.fragments.ReportFragment"
+        android:label="Report"
+        tools:layout="@layout/fragment_report"/>
 
 </navigation>
