@@ -12,9 +12,9 @@
         android:title="Transactions" />
 
     <item
-        android:id="@+id/budgetFragment"
+        android:id="@+id/reportFragment"
         android:icon="@drawable/budgeting"
-        android:title="Budget" />
+        android:title="Reports" />
 
     <item
         android:id="@+id/settingsFragment"
