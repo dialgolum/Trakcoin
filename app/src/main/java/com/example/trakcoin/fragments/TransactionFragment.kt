@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,8 @@ class TransactionFragment : Fragment() {
     private fun loadTransactions() {
         val prefManager = SharedPrefManager(requireContext())
         val transactions = prefManager.getAllTransactions()
+
+//        Log.d("LOAD_DEBUG", "Loaded transactions: ${transactions.size}")
 
             val adapter = TransactionAdapter(transactions.toMutableList()) { selectedTransaction ->
                 val intent = Intent(requireContext(), addTransactionActivity::class.java)
