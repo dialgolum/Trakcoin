@@ -43,4 +43,29 @@ class SharedPrefManager(context: Context) {
         editor.putString("transaction_list", json)
         editor.apply()
     }
+
+    fun saveMonthluBudget(budget: Double) {
+        editor.putFloat("monthly_budget", budget.toFloat())
+        editor.apply()
+    }
+
+    fun getMonthlyBudget(): Double? {
+        val value = prefs.getFloat("monthly_budget", -1f)
+        return if (value == -1f) null else value.toDouble()
+    }
+
+    fun saveCurrency(symbol: String) {
+        editor.putString("currency", symbol)
+        editor.apply()
+    }
+
+    fun getCurrency(): String {
+        return prefs.getString("currency", "LKR") ?: "LKR"
+    }
+
+    fun replaceAllTransactions(transactions: List<Transaction>) {
+        val json = Gson().toJson(transactions)
+        editor.putString("transaction_list", json)
+        editor.apply()
+    }
 }

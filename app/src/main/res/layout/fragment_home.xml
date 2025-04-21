@@ -1,15 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:padding="24dp"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome To TrakCoin!"
+        android:textSize="24sp"
         android:gravity="center"
-        android:text="Home"
-        android:textSize="24sp" />
+        android:layout_marginBottom="32dp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textBudgetStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Budget Used : Rs. 0 / 0"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"
+        android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/budgetProgress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="#4CAF50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>
