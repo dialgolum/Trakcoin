@@ -1,5 +1,7 @@
 package com.example.trakcoin.fragments
 
+import android.app.NotificationManager
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.icu.util.Calendar
@@ -10,7 +12,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.app.NotificationCompat
 import com.example.trakcoin.R
+import com.example.trakcoin.utils.NotificationUtils
 import com.example.trakcoin.utils.SharedPrefManager
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -82,5 +86,28 @@ class HomeFragment : Fragment() {
         }
 
         budgetProgress.progressTintList = ColorStateList.valueOf(color)
+
+        if (percent >= 100) {
+            sendBudgetNotification("🚨 Budget Exceeded", "You've gone over your budget!")
+        } else if (percent >= 80) {
+            sendBudgetNotification("⚠️ Budget Warning", "You're over 80% of your budget!")
         }
+
+
+    }
+
+    private fun sendBudgetNotification(title: String, message: String) {
+        val notificationManager =
+            requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val notification = NotificationCompat.Builder(requireContext(), NotificationUtils.CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .build()
+
+        notificationManager.notify(1, notification)
+    }
+
 }

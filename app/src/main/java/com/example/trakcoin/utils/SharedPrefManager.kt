@@ -68,4 +68,5 @@ class SharedPrefManager(context: Context) {
         editor.putString("transaction_list", json)
         editor.apply()
     }
+
 }

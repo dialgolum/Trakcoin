@@ -1,6 +1,9 @@
 package com.example.trakcoin.fragments
 
+import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +15,7 @@ import android.widget.Toast
 import com.example.trakcoin.R
 import com.example.trakcoin.activities.SettingsActivity
 import com.example.trakcoin.models.Transaction
+import com.example.trakcoin.utils.NotificationUtils
 import com.example.trakcoin.utils.SharedPrefManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -44,6 +48,10 @@ class SettingsFragment : Fragment() {
 
         view.findViewById<Button>(R.id.btnExportAsText).setOnClickListener {
             exportDataAsText()
+        }
+
+        view.findViewById<Button>(R.id.btnSetReminderTime).setOnClickListener {
+            showTimePicker()
         }
 
 
@@ -124,6 +132,32 @@ class SettingsFragment : Fragment() {
             Toast.makeText(requireContext(), "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
             Log.e("EXPORT_TXT", "Export error: ${e.message}")
         }
+    }
+
+    private fun showTimePicker() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePicker  = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            saveReminderTime(selectedHour, selectedMinute)
+            NotificationUtils.scheduleDailyReminder(requireContext(), selectedHour, selectedMinute)
+
+            Toast.makeText(
+                requireContext(),
+                "Reminder set for %02d:%02d".format(selectedHour, selectedMinute),
+                Toast.LENGTH_SHORT
+            ).show()
+        }, hour, minute, true)
+        timePicker.show()
+    }
+
+    private fun saveReminderTime(hour: Int, minute: Int) {
+        val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        prefs.edit()
+            .putInt("reminder_hour", hour)
+            .putInt("reminder_minute", minute)
+            .apply()
     }
 
 }
