@@ -11,9 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
+import androidx.cardview.widget.CardView
 import com.example.trakcoin.R
 import com.example.trakcoin.activities.SettingsActivity
 import com.example.trakcoin.models.Transaction
@@ -34,25 +36,25 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view =  inflater.inflate(R.layout.fragment_settings, container, false)
 
-        val btnSettings = view.findViewById<Button>(R.id.btnOpenSettings)
+        val btnSettings = view.findViewById<CardView>(R.id.btnOpenSettings)
         btnSettings.setOnClickListener {
             val intent = Intent(requireContext(), SettingsActivity::class.java)
             startActivity(intent)
         }
 
-        view.findViewById<Button>(R.id.btnExportData).setOnClickListener {
+        view.findViewById<CardView>(R.id.btnExportData).setOnClickListener {
             exportTransactionData()
         }
 
-        view.findViewById<Button>(R.id.btnRestoreData).setOnClickListener {
+        view.findViewById<CardView>(R.id.btnRestoreData).setOnClickListener {
             restoreTransactionData()
         }
 
-        view.findViewById<Button>(R.id.btnExportAsText).setOnClickListener {
+        view.findViewById<CardView>(R.id.btnExportAsText).setOnClickListener {
             exportDataAsText()
         }
 
-        view.findViewById<Button>(R.id.btnSetReminderTime).setOnClickListener {
+        view.findViewById<CardView>(R.id.btnSetReminderTime).setOnClickListener {
             showTimePicker()
         }
 

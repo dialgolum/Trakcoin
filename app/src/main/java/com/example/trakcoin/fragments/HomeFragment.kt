@@ -13,7 +13,10 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.trakcoin.R
+import com.example.trakcoin.adapter.TransactionAdapter
 import com.example.trakcoin.utils.NotificationUtils
 import com.example.trakcoin.utils.SharedPrefManager
 import java.text.SimpleDateFormat
@@ -40,10 +43,41 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val prefManager = SharedPrefManager(requireContext())
+        val transactions = prefManager.getAllTransactions()
+
+        val incomeTotal = transactions
+            .filter { it.type.equals("Income", ignoreCase = true) }
+            .sumOf { it.amount }
+
+        val expenseTotal = transactions
+            .filter { it.type.equals("Expense", ignoreCase = true) }
+            .sumOf { it.amount }
+
+        // Update total income & expense TextViews
+        view.findViewById<TextView>(R.id.textTotalIncome).text = "Rs. %.2f".format(incomeTotal)
+        view.findViewById<TextView>(R.id.textTotalExpense).text = "Rs. %.2f".format(expenseTotal)
+
+        // Load recent 3 transactions
+        val recent = transactions.takeLast(3).reversed() //newest first
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerRecentTransactions)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = TransactionAdapter(recent.toMutableList()) {
+            // Handle item click
+            val transaction = it
+            // Do something with the clicked transaction
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         showBudgetProgress()
     }
+
+
 
     private fun showBudgetProgress() {
         val pref = SharedPrefManager(requireContext())

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="80dp"
     android:fitsSystemWindows="true"
     tools:context=".fragments.TransactionFragment">
@@ -32,6 +33,8 @@
         android:src="@drawable/ic_add"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        app:backgroundTint="#4CAF50"
+        app:tint="#FFFFFF"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="10dp"/>
 
