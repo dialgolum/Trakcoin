@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.Trakcoin" parent="Base.Theme.Trakcoin" />
+
+    <style name="TrakCoinBottomNav" parent="">
+        <item name="android:itemBackground">@android:color/transparent</item>
+        <item name="android:state_checked">false</item>
+    </style>
 </resources>
