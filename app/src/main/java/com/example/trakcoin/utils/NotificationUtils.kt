@@ -57,4 +57,14 @@ object NotificationUtils {
             pendingIntent
         )
     }
+
+    fun cancelDailyReminder(context: Context) {
+        val intent = Intent(context, ReminderReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            context, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.cancel { pendingIntent }
+    }
 }

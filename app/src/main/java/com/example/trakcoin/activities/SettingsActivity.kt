@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -59,6 +60,12 @@ class SettingsActivity : AppCompatActivity() {
             prefs.saveCurrency(currency)
 
             Toast.makeText(this, "Settings saved", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+
+        val back2 = findViewById<ImageButton>(R.id.ibBack2)
+
+        back2.setOnClickListener {
             finish()
         }
     }

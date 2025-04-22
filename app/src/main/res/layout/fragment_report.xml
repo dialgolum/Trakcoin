@@ -3,22 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".fragments.ReportFragment">
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Category Report"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         />
 
     <Spinner
         android:id="@+id/spinnerMonth"
-        android:layout_gravity="center"
+        android:layout_gravity="right"
         android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -42,6 +44,7 @@
                 android:id="@+id/radioIncome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:buttonTint="@color/radio_button_tint"
                 android:text="Income"
                 android:checked="true" />
 
@@ -49,6 +52,7 @@
                 android:id="@+id/radioExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:buttonTint="@color/radio_button_tint"
                 android:text="Expense" />
 
         </RadioGroup>
@@ -64,7 +68,8 @@
         android:id="@+id/recyclerCategorySummary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="80dp"/>
 
 
 </LinearLayout>

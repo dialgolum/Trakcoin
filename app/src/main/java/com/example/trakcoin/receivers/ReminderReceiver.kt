@@ -14,7 +14,7 @@ class ReminderReceiver : BroadcastReceiver() {
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val notification = NotificationCompat.Builder(context, NotificationUtils.CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_reminder)
+            .setSmallIcon(R.drawable.trakoin)
             .setContentTitle("💰 Don’t forget to track expenses!")
             .setContentText("Log your daily spending in TrakCoin 📲")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

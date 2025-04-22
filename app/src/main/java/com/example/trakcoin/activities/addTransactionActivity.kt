@@ -21,6 +21,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import android.util.Log
+import android.widget.ImageButton
 import com.google.gson.Gson
 
 
@@ -143,6 +144,12 @@ class addTransactionActivity : AppCompatActivity() {
                 Toast.makeText(this, "Transaction saved", Toast.LENGTH_SHORT).show()
             }
 
+            finish()
+        }
+
+        val back = findViewById<ImageButton>(R.id.ibBack)
+
+        back.setOnClickListener {
             finish()
         }
 
