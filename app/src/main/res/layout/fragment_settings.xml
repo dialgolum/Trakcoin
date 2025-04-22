@@ -51,5 +51,21 @@
         android:text="Set Daily Reminder Time"
         android:layout_marginTop="8dp" />
 
+    <TextView
+        android:id="@+id/textReminderTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reminder set for: Not Set"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchReminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enable Daily Reminders"
+        android:checked="true"
+        android:layout_marginTop="12dp"/>
+
 
 </LinearLayout>

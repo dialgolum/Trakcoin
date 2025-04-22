@@ -11,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.SwitchCompat
 import com.example.trakcoin.R
 import com.example.trakcoin.activities.SettingsActivity
 import com.example.trakcoin.models.Transaction
@@ -52,6 +54,32 @@ class SettingsFragment : Fragment() {
 
         view.findViewById<Button>(R.id.btnSetReminderTime).setOnClickListener {
             showTimePicker()
+        }
+
+        updateDisplayedReminderTime(view)
+
+        val switchReminder = view.findViewById<SwitchCompat>(R.id.switchReminder)
+
+
+        // Load saved reminder status
+        val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val isEnabled = prefs.getBoolean("reminder_enabled", true)
+        switchReminder.isChecked = isEnabled
+
+        // Listen to toggle
+        switchReminder.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("reminder_enabled", isChecked).apply()
+
+            if (isChecked) {
+                // Schedule using saved time or default
+                val hour = prefs.getInt("reminder_hour", 21)
+                val minute = prefs.getInt("reminder_minute", 30)
+                NotificationUtils.scheduleDailyReminder(requireContext(), hour, minute)
+                Toast.makeText(requireContext(), "Reminder enabled", Toast.LENGTH_SHORT).show()
+            } else {
+                NotificationUtils.cancelDailyReminder(requireContext())
+                Toast.makeText(requireContext(), "Reminder disabled", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -140,8 +168,14 @@ class SettingsFragment : Fragment() {
         val minute = calendar.get(Calendar.MINUTE)
 
         val timePicker  = TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+            // 🔹 Save selected time
             saveReminderTime(selectedHour, selectedMinute)
+
+            // 🔹 Schedule the reminder
             NotificationUtils.scheduleDailyReminder(requireContext(), selectedHour, selectedMinute)
+
+            // 🔹 Update displayed reminder time ✅
+            updateDisplayedReminderTime(view)
 
             Toast.makeText(
                 requireContext(),
@@ -158,6 +192,20 @@ class SettingsFragment : Fragment() {
             .putInt("reminder_hour", hour)
             .putInt("reminder_minute", minute)
             .apply()
+    }
+
+    private fun updateDisplayedReminderTime(view: View?) {
+        val prefs = requireContext().getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val hour = prefs.getInt("reminder_hour", -1)
+        val minute = prefs.getInt("reminder_minute", -1)
+
+        val timeText = if (hour != -1 && minute != -1) {
+            "Reminder set for: %02d:%02d".format(hour, minute)
+        } else {
+            "Reminder set for: Not set"
+        }
+
+        view?.findViewById<TextView>(R.id.textReminderTime)?.text = timeText
     }
 
 }

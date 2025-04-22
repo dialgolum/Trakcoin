@@ -35,10 +35,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val hour = prefs.getInt("reminder_hour", 21)
-        val minute = prefs.getInt("reminder_minute", 30)
+        val enabled = prefs.getBoolean("reminder_enabled", true)
+        if (enabled) {
+            val hour = prefs.getInt("reminder_hour", 21)
+            val minute = prefs.getInt("reminder_minute", 30)
+            scheduleDailyReminder(this, hour, minute)
+        }
 
-        scheduleDailyReminder(this, hour, minute)
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
