@@ -4,6 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="categories">
+        <item>Active Income</item>
+        <item>Passive Income</item>
         <item>Food</item>
         <item>Transport</item>
         <item>Bills</item>
